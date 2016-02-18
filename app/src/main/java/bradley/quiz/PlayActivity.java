@@ -12,8 +12,8 @@ public class PlayActivity extends AppCompatActivity implements PlayFragment.OnFr
         setContentView(R.layout.activity_play);
         getFragmentManager()
                 .beginTransaction()
-                .add(R.id.main_fragment_container, PlayFragment.newInstance(null, null))
-
+                .replace(R.id.main_fragment_container, PlayFragment.newInstance(null, null, null))
+                .addToBackStack(null)
                 .commit();
     }
 
