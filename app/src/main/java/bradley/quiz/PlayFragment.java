@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -28,7 +29,9 @@ public class PlayFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_PARAM3 = "param3";
+    private static final String ARG_PARAM4 = "param4";
 
+    private int score = 0;
 
     private TextView question;
     private Button A1;
@@ -42,6 +45,7 @@ public class PlayFragment extends Fragment {
     private String choice1;
     private String choice2;
     private String choice3;
+    private String point;
 
     private OnFragmentInteractionListener mListener;
 
@@ -59,12 +63,13 @@ public class PlayFragment extends Fragment {
      * @return A new instance of fragment PlayFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static PlayFragment newInstance(String param1, String param2, String param3) {
+    public static PlayFragment newInstance(String param1, String param2, String param3, String param4) {
         PlayFragment fragment = new PlayFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         args.putString(ARG_PARAM3, param3);
+        args.putString(ARG_PARAM4, param4);
         fragment.setArguments(args);
         return fragment;
     }
@@ -76,6 +81,7 @@ public class PlayFragment extends Fragment {
             choice1 = getArguments().getString(ARG_PARAM1);
             choice2 = getArguments().getString(ARG_PARAM2);
             choice3 = getArguments().getString(ARG_PARAM3);
+            point = getArguments().getString(ARG_PARAM4);
         }
     }
 
@@ -129,7 +135,7 @@ public class PlayFragment extends Fragment {
                     getFragmentManager()
                             .beginTransaction()
                             .addToBackStack(null)
-                            .replace(R.id.main_fragment_container, PlayFragment.newInstance(a[0][0], null, null))
+                            .replace(R.id.main_fragment_container, PlayFragment.newInstance(a[0][0], null, null,point))
                             .commit();
 
                 } else if (choice2 == null) {
@@ -137,10 +143,11 @@ public class PlayFragment extends Fragment {
                     getFragmentManager()
                             .beginTransaction()
                             .addToBackStack(null)
-                            .replace(R.id.main_fragment_container, PlayFragment.newInstance(choice1, a[0][1], null))
+                            .replace(R.id.main_fragment_container, PlayFragment.newInstance(choice1, a[0][1], null,point))
                             .commit();
                 } else {
                     choice3 = (a[0][2]);
+
                     gameLogic();
 
                 }
@@ -154,7 +161,7 @@ public class PlayFragment extends Fragment {
                     getFragmentManager()
                             .beginTransaction()
                             .addToBackStack(null)
-                            .replace(R.id.main_fragment_container, PlayFragment.newInstance(a[1][0], null, null))
+                            .replace(R.id.main_fragment_container, PlayFragment.newInstance(a[1][0], null, null,point))
                             .commit();
 
                 }
@@ -163,7 +170,7 @@ public class PlayFragment extends Fragment {
                     getFragmentManager()
                             .beginTransaction()
                             .addToBackStack(null)
-                            .replace(R.id.main_fragment_container, PlayFragment.newInstance(choice1, a[1][1], null))
+                            .replace(R.id.main_fragment_container, PlayFragment.newInstance(choice1, a[1][1], null,point))
                             .commit();
                 }
                 else{
@@ -181,7 +188,7 @@ public class PlayFragment extends Fragment {
                     getFragmentManager()
                             .beginTransaction()
                             .addToBackStack(null)
-                            .replace(R.id.main_fragment_container, PlayFragment.newInstance(a[2][0], null, null))
+                            .replace(R.id.main_fragment_container, PlayFragment.newInstance(a[2][0], null, null, point))
                             .commit();
 
                 } else if (choice2 == null) {
@@ -189,12 +196,11 @@ public class PlayFragment extends Fragment {
                     getFragmentManager()
                             .beginTransaction()
                             .addToBackStack(null)
-                            .replace(R.id.main_fragment_container, PlayFragment.newInstance(choice1, a[2][1], null))
+                            .replace(R.id.main_fragment_container, PlayFragment.newInstance(choice1, a[2][1], null, point))
                             .commit();
                 } else {
                     choice3 = (a[2][2]);
                     gameLogic();
-
                 }
             }
         });
@@ -241,21 +247,30 @@ public class PlayFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface OnFragmentInteractionListener  {
         // TODO: Update argument type and name
 
         void onFragmentInteraction(Uri uri);
     }
 
+    public void submit(){
+        EditText editText = (EditText)getView().findViewById(R.id.editText);
+        String text = editText.getText().toString().trim();
+        if(text.equals("red"))
+            score++;
+        gameLogic();
+    }
 
 
     private void gameLogic(){
-        int score = 0;
+
         if(choice1.equals("12"))
             score++;
         if(choice2.equals("CS407"))
             score++;
         if(choice3.equals("Leaves"))
+            score++;
+        if(point!=null)
             score++;
         String s =  "" + score;
         displayScore(s);
@@ -271,6 +286,7 @@ public class PlayFragment extends Fragment {
                 .setPositiveButton("Replay", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        getFragmentManager().popBackStack();
                         getFragmentManager().popBackStack();
                         getFragmentManager().popBackStack();
                     }

@@ -1,0 +1,41 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="bradley.quiz.PlayFragmentTwo">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="144dp"
+        android:id="@+id/imageView"
+        android:src="@drawable/car"
+        android:layout_gravity="center_horizontal|top" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_gravity="center_horizontal|bottom"
+        android:hint="Answer"
+        android:textAlignment="center"
+        android:textSize="40dp"
+        android:layout_marginBottom="0dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="What color is the car?"
+        android:id="@+id/textView2"
+        android:layout_gravity="center"
+        android:textSize="30dp" />
+
+    <Button
+        android:layout_width="147dp"
+        android:layout_height="78dp"
+        android:text="Submit"
+        android:id="@+id/B1"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="90dp" />
+</FrameLayout>
