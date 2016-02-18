@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 
 
 /**
@@ -182,16 +184,14 @@ public class PlayFragment extends Fragment {
                             .replace(R.id.main_fragment_container, PlayFragment.newInstance(a[2][0], null, null))
                             .commit();
 
-                }
-                else if (choice2 == null) {
+                } else if (choice2 == null) {
                     //TODO answer 2
                     getFragmentManager()
                             .beginTransaction()
                             .addToBackStack(null)
                             .replace(R.id.main_fragment_container, PlayFragment.newInstance(choice1, a[2][1], null))
                             .commit();
-                }
-                else{
+                } else {
                     choice3 = (a[2][2]);
                     gameLogic();
 
@@ -247,7 +247,41 @@ public class PlayFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+
+
     private void gameLogic(){
+        int score = 0;
+        if(choice1.equals("12"))
+            score++;
+        if(choice2.equals("CS407"))
+            score++;
+        if(choice3.equals("Leaves"))
+            score++;
+        String s =  "" + score;
+        displayScore(s);
+    }
+
+    private void displayScore(String score){
+
+        //do a prompt about the winner
+        new AlertDialog.Builder(getActivity())
+                .setCancelable(true)
+                .setTitle("Your score was")
+                .setMessage(score)
+                .setPositiveButton("Replay", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        getFragmentManager().popBackStack();
+                        getFragmentManager().popBackStack();
+                    }
+                })
+                .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        getActivity().finish();
+                    }
+                })
+                .show();
 
     }
 }
