@@ -237,6 +237,7 @@ public class PlayFragment extends Fragment {
             score++;
         if(point!=null)
             score++;
+        //4 questions
         String s =  "" + score;
         displayScore(s);
     }
@@ -246,7 +247,7 @@ public class PlayFragment extends Fragment {
         //do a prompt about the winner
         new AlertDialog.Builder(getActivity())
                 .setCancelable(true)
-                .setTitle("Your score was")
+                .setTitle("Total correct answers:")
                 .setMessage(score)
                 .setPositiveButton("Replay", new DialogInterface.OnClickListener() {
                     @Override
