@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -21,27 +20,29 @@ import android.content.DialogInterface;
  * to handle interaction events.
  * Use the {@link PlayFragment#newInstance} factory method to
  * create an instance of this fragment.
+ * This subclass also contains the game logic for the quiz
+ *
  */
 public class PlayFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_PARAM3 = "param3";
     private static final String ARG_PARAM4 = "param4";
 
+    //score at the end of game
     private int score = 0;
 
-    private TextView question;
     private Button A1;
     private Button A2;
     private Button A3;
 
+    //questions and answers
     private String[][] a = {{"7","CS407","hair"},{"12","CS506","Leaves"},{"1","CS202","People"}};
-    private String[] q = new String[3];
+    private String[] q = {"What is 4x3?" ,"What class is this HW for?", "What grows on tree branches?"};
 
-    // TODO: Rename and change types of parameters
+
     private String choice1;
     private String choice2;
     private String choice3;
@@ -62,7 +63,6 @@ public class PlayFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment PlayFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static PlayFragment newInstance(String param1, String param2, String param3, String param4) {
         PlayFragment fragment = new PlayFragment();
         Bundle args = new Bundle();
@@ -92,14 +92,10 @@ public class PlayFragment extends Fragment {
         View view  = inflater.inflate(R.layout.fragment_play, container, false);
 
         //connect to their widgets
-        question = (TextView)view.findViewById(R.id.question);
+        TextView question = (TextView) view.findViewById(R.id.question);
         A1 = (Button)view.findViewById(R.id.A1);
         A2 = (Button)view.findViewById(R.id.A2);
         A3 = (Button)view.findViewById(R.id.A3);
-
-        q[0] = "What is 4x3?";
-        q[1] = "What class is this HW for?";
-        q[2] = "What grows on tree branches?";
 
         if(choice1==null){
             question.setText(q[0]);
@@ -131,33 +127,31 @@ public class PlayFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (choice1 == null) {
-                    //TODO answer 1
                     getFragmentManager()
                             .beginTransaction()
                             .addToBackStack(null)
                             .replace(R.id.main_fragment_container, PlayFragment.newInstance(a[0][0], null, null,point))
                             .commit();
 
-                } else if (choice2 == null) {
-                    //TODO answer 2
+                }
+                else if (choice2 == null){
                     getFragmentManager()
                             .beginTransaction()
                             .addToBackStack(null)
                             .replace(R.id.main_fragment_container, PlayFragment.newInstance(choice1, a[0][1], null,point))
                             .commit();
-                } else {
+                }
+                else {
                     choice3 = (a[0][2]);
-
                     gameLogic();
-
                 }
             }
         });
+
         A2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (choice1 == null) {
-                    //TODO answer 1
                     getFragmentManager()
                             .beginTransaction()
                             .addToBackStack(null)
@@ -166,7 +160,6 @@ public class PlayFragment extends Fragment {
 
                 }
                 else if (choice2 == null) {
-                    //TODO answer 2
                     getFragmentManager()
                             .beginTransaction()
                             .addToBackStack(null)
@@ -184,7 +177,6 @@ public class PlayFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (choice1 == null) {
-                    //TODO answer 1
                     getFragmentManager()
                             .beginTransaction()
                             .addToBackStack(null)
@@ -192,7 +184,6 @@ public class PlayFragment extends Fragment {
                             .commit();
 
                 } else if (choice2 == null) {
-                    //TODO answer 2
                     getFragmentManager()
                             .beginTransaction()
                             .addToBackStack(null)
@@ -206,18 +197,6 @@ public class PlayFragment extends Fragment {
         });
     }
 
-
-
-
-
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -229,14 +208,11 @@ public class PlayFragment extends Fragment {
         }
     }
 
-
-
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -248,19 +224,8 @@ public class PlayFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener  {
-        // TODO: Update argument type and name
-
         void onFragmentInteraction(Uri uri);
     }
-
-    public void submit(){
-        EditText editText = (EditText)getView().findViewById(R.id.editText);
-        String text = editText.getText().toString().trim();
-        if(text.equals("red"))
-            score++;
-        gameLogic();
-    }
-
 
     private void gameLogic(){
 

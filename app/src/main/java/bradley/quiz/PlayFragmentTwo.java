@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+
 
 
 /**
@@ -21,19 +21,18 @@ import android.widget.ImageView;
  * create an instance of this fragment.
  */
 public class PlayFragmentTwo extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    //not necessary since I only do one instance of this fragment
+    //I added more instances of this fragment I would use
+    //private String mParam1;
+    //private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
-    private ImageView image;
-    private EditText text;
+    //for widget
     private Button B1;
 
     public PlayFragmentTwo() {
@@ -48,7 +47,7 @@ public class PlayFragmentTwo extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment PlayFragmentTwo.
      */
-    // TODO: Rename and change types and number of parameters
+
     public static PlayFragmentTwo newInstance(String param1, String param2) {
         PlayFragmentTwo fragment = new PlayFragmentTwo();
         Bundle args = new Bundle();
@@ -61,10 +60,11 @@ public class PlayFragmentTwo extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        //use if more than on instance
+        //if (getArguments() != null)
+            //mParam1 = getArguments().getString(ARG_PARAM1);
+            //mParam2 = getArguments().getString(ARG_PARAM2);
+        //}
     }
 
     @Override
@@ -82,13 +82,15 @@ public class PlayFragmentTwo extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState){
+    public void onViewCreated(final View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
+
 
         B1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText editText = (EditText)getView().findViewById(R.id.editText);
+                //should never be null
+                EditText editText = (EditText)view.findViewById(R.id.editText);
                 String text = editText.getText().toString().trim();
                 editText.setText("");
                 if (text.equals("red")) {
@@ -109,14 +111,6 @@ public class PlayFragmentTwo extends Fragment {
         });
     }
 
-
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -147,7 +141,6 @@ public class PlayFragmentTwo extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }
