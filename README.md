@@ -1,5 +1,6 @@
 # Quiz
 Homework one cs 407
+
 The app consists of two different fragments that are for image questions and text questions.
 The quiz is made up of four questions one image question and three text questions.
 The image question has to be answered in a text box and submitted by clicking the submit button.
